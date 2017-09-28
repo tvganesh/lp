@@ -456,31 +456,31 @@ add.constraint(lprec, c(0,0,0,0,0,0,1,1,1), "<=",3)
 add.constraint(lprec, c(1,1,1,1,1,1,1,1,1), "=",7)
 
 
-add.constraint(lprec, c(1,0,0,0,0,0,0,0,0), ">=",1)
+add.constraint(lprec, c(1,0,0,0,0,0,0,0,0), ">=",0)
 #add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), "<=",4)
 
 add.constraint(lprec, c(0,1,0,0,0,0,0,0,0), ">=",0)
 #add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), "<=",4)
 
-add.constraint(lprec, c(0,0,1,0,0,0,0,0,0), ">=",2)
+add.constraint(lprec, c(0,0,1,0,0,0,0,0,0), ">=",0)
 # add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), "<=",4)
 
 add.constraint(lprec, c(0,0,0,1,0,0,0,0,0), ">=",0)
 #add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), "<=",4)
 
-add.constraint(lprec, c(0,0,0,0,1,0,0,0,0), ">=",1)
+add.constraint(lprec, c(0,0,0,0,1,0,0,0,0), ">=",0)
 #add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), "<=",4)
 
 add.constraint(lprec, c(0,0,0,0,0,1,0,0,0), ">=",0)
 #add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), "<=",4)
 
-add.constraint(lprec, c(0,0,0,0,0,0,1,0,0), ">=",1)
+add.constraint(lprec, c(0,0,0,0,0,0,1,0,0), ">=",0)
 #add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), "<=",4)
 
 add.constraint(lprec, c(0,0,0,0,0,0,0,1,0), ">=",0)
 #add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), "<=",4)
 
-add.constraint(lprec, c(0,0,0,0,0,0,0,0,1), ">=",1)
+add.constraint(lprec, c(0,0,0,0,0,0,0,0,1), ">=",0)
 
 lprec
 solve(lprec)
@@ -488,10 +488,81 @@ get.objective(lprec) #
 get.variables(lprec) # 
 
 
+################################################################################### Bowlingg
+# RA Jadeja
+jadejaWatson<- computeSR("SR Watson","RA Jadeja")
+jadejaWatson
+
+jadejaFinch <- computeSR("AJ Finch","RA Jadeja")
+jadejaFinch
+
+jadejaWarner <- computeSR("DA Warner","RA Jadeja")
+jadejaWarner
+
+
+# Ashwin
+ashwinWatson<- computeSR("SR Watson","R Ashwin")
+ashwinWatson
+
+ashwinFinch <- computeSR("AJ Finch","R Ashwin")
+ashwinFinch
+
+ashwinWarner <- computeSR("DA Warner","R Ashwin")
+ashwinWarner
+
+# JJ Bunrah
+bumrahWatson<- computeSR("SR Watson","JJ Bumrah")
+bumrahWatson
+
+bumrahFinch <- computeSR("AJ Finch","JJ Bumrah")
+bumrahFinch
+
+bumrahWarner <- computeSR("DA Warner","JJ Bumrah")
+bumrahWarner
 
 
 
+lprec <- make.lp(0, 9)
+lp.control(lprec, sense="min")
+
+set.objfn(lprec, c(jadejaWatson$SR, jadejaFinch$SR,jadejaWarner$SR,
+                   ashwinWatson$SR,ashwinFinch$SR,ashwinWarner$SR,
+                   bumrahWatson$SR,bumrahFinch$SR,bumrahWarner$SR))
+
+add.constraint(lprec, c(1, 1,1,0,0,0, 0,0,0), "<=",4)
+add.constraint(lprec, c(0,0,0,1,1,1,0,0,0), "<=",3)
+add.constraint(lprec, c(0,0,0,0,0,0,1,1,1), "<=",4)
+add.constraint(lprec, c(1,1,1,1,1,1,1,1,1), "=",8)
 
 
+add.constraint(lprec, c(1,0,0,0,0,0,0,0,0), ">=",0)
+#add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), "<=",4)
 
+add.constraint(lprec, c(0,1,0,0,0,0,0,0,0), ">=",0)
+#add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,1,0,0,0,0,0,0), ">=",0)
+# add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,1,0,0,0,0,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,1,0,0,0,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,1,0,0,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,0,1,0,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,0,0,1,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,0,0,0,1), ">=",0)
+
+lprec
+solve(lprec)
+get.objective(lprec) #  
+get.variables(lprec) # 
  
