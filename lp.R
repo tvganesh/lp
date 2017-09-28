@@ -207,6 +207,7 @@ uthappaPollard <- computeSR("RV Uthappa","KA Pollard")
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), ">=",0)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), "<=",4)
  
+ ###########################################
  lprec
  solve(lprec)
  get.objective(lprec) #   
@@ -221,19 +222,55 @@ uthappaPollard <- computeSR("RV Uthappa","KA Pollard")
                     gambhirHarbhajan$SR,yusufHarbhajan$SR
                     ))
  add.constraint(lprec, c(1, 1,0,0), "<=",4)
- add.constraint(lprec, c(1,1,0,0), "<=",4)
+ add.constraint(lprec, c(0,0,1,1), "<=",4)
  add.constraint(lprec, c(1,1,1,1), "=",6)
  
- add.constraint(lprec, c(1, 0,0,0), ">",0)
- add.constraint(lprec, c(1, 0,0,0), "<=",4)
+ add.constraint(lprec, c(1, 0,0,0), ">",1)
+ #add.constraint(lprec, c(1, 0,0,0), "<=",4)
  add.constraint(lprec, c(0, 1,0,0), ">",1)
- add.constraint(lprec, c(0, 1,0,0), "<=",4)
+ #add.constraint(lprec, c(0, 1,0,0), "<=",4)
  add.constraint(lprec, c(0, 0,1,0), ">",1)
- add.constraint(lprec, c(0, 0,1,0), "<=",4)
+ #add.constraint(lprec, c(0, 0,1,0), "<=",4)
  add.constraint(lprec, c(0, 0,0,1), ">",1)
- add.constraint(lprec, c(0, 0,0,1), "<=",4)
+ #add.constraint(lprec, c(0, 0,0,1), "<=",4)
  lprec
  solve(lprec)
- get.objective(lprec) #   15
- get.variables(lprec) # 1 2 2 1
+ get.objective(lprec) #   
+ get.variables(lprec) # 
+ 
+ ########################################################6########################
+ lprec
+ solve(lprec)
+ get.objective(lprec) #   
+ get.variables(lprec) # 
+ 
+ 
+ library("lpSolveAPI")
+ lprec <- make.lp(0, 6)
+ lp.control(lprec, sense="min")
+ 
+ set.objfn(lprec, c(gambhirMalinga$SR, yusufMalinga$SR,kallisMalinga$SR,
+                    gambhirHarbhajan$SR,yusufHarbhajan$SR,kallisHarbhajan$SR))
+ 
+ add.constraint(lprec, c(1, 1,0,0,0,0), "<=",4)
+ add.constraint(lprec, c(0,0,1,1,0,0), "<=",4)
+ add.constraint(lprec, c(0,0,0,0,1,1,), "<=",4)
+ add.constraint(lprec, c(1,1,1,1,1,1), "=",8)
+ 
+ add.constraint(lprec, c(1, 0,0,0,0,0), ">",1)
+ #add.constraint(lprec, c(1, 0,0,0), "<=",4)
+ add.constraint(lprec, c(0, 1,0,0,0,0), ">",1)
+ #add.constraint(lprec, c(0, 1,0,0), "<=",4)
+ add.constraint(lprec, c(0, 0,1,0,0,0), ">",2)
+ #add.constraint(lprec, c(0, 0,1,0), "<=",4)
+ add.constraint(lprec, c(0, 0,0,1,0,0), ">",1)
+ #add.constraint(lprec, c(0, 0,0,1), "<=",4)
+ 
+ add.constraint(lprec, c(0,0, 0,0,1,0), ">",1)
+ add.constraint(lprec, c(0,0, 0,0,0,1), ">",1)
+ lprec
+ solve(lprec)
+ get.objective(lprec) #  
+ get.variables(lprec) # 
+ 
  
