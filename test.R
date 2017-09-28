@@ -1,5 +1,35 @@
 
 
+B1	B2	Obj Fun(=4*B1+3*B2)
+1	3	13
+2	2	14
+3	1	15
+
+a <- c(1,3,13)
+b <- c(2,2,14)
+c <- c(3,1,15)
+
+d <- as.data.frame(rbind(a,b,c))
+names(d) <- c("B1","B2","Obj func=4*B1+3*B2")
+rownames(d) <- c("opt1","opt2","opt3")
+
+e <- as.data.frame(rbind(c(1,3,13),c(2,2,14),c(3,1,15)))
+names(e) <- c("B1","B2","Obj func=4*B1+3*B2")
+rownames(e) <- c("opt1","opt2","opt3")
+
+
+e <- as.data.frame(rbind(c(1,1,1),c(0,3,0),c(2,0,0),c(3,4,1)))
+names(e) <- c("S Watson","B Lee","MA Starc")
+rownames(e) <- c("Kohli","Yuvraj","Dhoni","overs")
+e
+
+
+e <- as.data.frame(rbind(c(2,0,2),c(0, 3, 0),c(1, 0, 2),c(0,0,0),c(3,3,4)))
+names(e) <- c("Malinga","Harbhajan","Pollard")
+rownames(e) <- c("Gambhir","Yusuf","Kallis","Uthappa","Overs")
+e 
+                   
+                   
 library("lpSolveAPI")
 
 # Gambhir

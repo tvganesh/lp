@@ -150,7 +150,8 @@ $(document).ready(function () {
 <pre><code>## Warning: package 'lpSolveAPI' was built under R version 3.4.1</code></pre>
 <pre class="r"><code>library(dplyr)</code></pre>
 <pre><code>## Warning: package 'dplyr' was built under R version 3.4.1</code></pre>
-<pre class="r"><code>lprec &lt;- make.lp(0, 2)
+<pre class="r"><code>library(knitr)
+lprec &lt;- make.lp(0, 2)
 a &lt;-lp.control(lprec, sense=&quot;min&quot;)
 set.objfn(lprec, c(4, 3))  # Economy Rate of 4 and 3 for er1 and er2
 add.constraint(lprec, c(1, 1), &quot;=&quot;,4)  # o1 + o2 =4
@@ -330,6 +331,16 @@ Yuvraj 0 3 0<br />
 Dhoni 2 0 0<br />
 Overs 3 4 1<br />
 Total=8</p>
+<p>This is also shown below</p>
+<pre class="r"><code>e &lt;- as.data.frame(rbind(c(1,1,1),c(0,3,0),c(2,0,0),c(3,4,1)))
+names(e) &lt;- c(&quot;S Watson&quot;,&quot;B Lee&quot;,&quot;MA Starc&quot;)
+rownames(e) &lt;- c(&quot;Kohli&quot;,&quot;Yuvraj&quot;,&quot;Dhoni&quot;,&quot;Overs&quot;)
+e</code></pre>
+<pre><code>##        S Watson B Lee MA Starc
+## Kohli         1     1        1
+## Yuvraj        0     3        0
+## Dhoni         2     0        0
+## Overs         3     4        1</code></pre>
 <p><strong>Note:</strong> This assumes that the batsmen perform at their current Strike Rate. Howvever anything can happen in a real game, but nevertheless this is a fairly reasonable estimate of the performance</p>
 </div>
 <div id="lp-formulation-for-international-t20-india-vs-australia-bowling-lineup" class="section level2">
@@ -411,12 +422,16 @@ get.objective(lprec) #  </code></pre>
 <pre class="r"><code>get.variables(lprec) # </code></pre>
 <pre><code>## [1] 1 2 1 0 1 1 0 1 3</code></pre>
 <p>The minimum runs that will be conceded by these 3 bowlers in 10 overs is 73.58 assuming the bowling is rotated as follows</p>
-<p>Batsman RA Jadeja R Ashwin JJ Bumrah<br />
-S Watson 1 0 0<br />
-AJ Finch 2 1 1<br />
-DA Warner 1 1 3<br />
-Overs 4 2 4<br />
-Total=10</p>
+<pre class="r"><code>e &lt;- as.data.frame(rbind(c(1,0,0),c(2,1,1),c(1,1,3),c(4,2,4)))
+names(e) &lt;- c(&quot;RA Jadeja&quot;,&quot;R Ashwin&quot;,&quot;JJ Bumrah&quot;)
+rownames(e) &lt;- c(&quot;S Watson&quot;,&quot;AJ Finch&quot;,&quot;DA Warner&quot;,&quot;Overs&quot;)
+e </code></pre>
+<pre><code>##           RA Jadeja R Ashwin JJ Bumrah
+## S Watson          1        0         0
+## AJ Finch          2        1         1
+## DA Warner         1        1         3
+## Overs             4        2         4</code></pre>
+<pre class="r"><code>#Total overs=10  </code></pre>
 </div>
 <div id="lp-formulation-for-ipl-mumbai-indians---kolkata-knight-riders---bowling-lineup" class="section level2">
 <h2>7. LP formulation for IPL (Mumbai Indians - Kolkata Knight Riders - Bowling lineup)</h2>
@@ -459,30 +474,36 @@ uthappaPollard &lt;- computeER(&quot;RV Uthappa&quot;,&quot;KA Pollard&quot;)</c
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,1,1,1), &quot;&lt;=&quot;,4)
  add.constraint(lprec, c(1,1,1,1,1,1,1,1,1,1,1,1), &quot;=&quot;,10)
  
- add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,1)
- add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,2)
+ add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
+ add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,1)
+ add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
  add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), &quot;&gt;=&quot;,1)
- add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), &quot;&gt;=&quot;,1)
- add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), &quot;&gt;=&quot;,1)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), &quot;&lt;=&quot;,4)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), &quot;&gt;=&quot;,0)
+ add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
+ add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), &quot;&gt;=&quot;,1)
+ add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), &quot;&gt;=&quot;,0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), &quot;&gt;=&quot;,1)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), &quot;&gt;=&quot;,0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), &quot;&gt;=&quot;,1)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), &quot;&lt;=&quot;,4)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), &quot;&lt;=&quot;,4)
  
  lprec</code></pre>
 <pre><code>## Model name: 
-##   a linear program with 12 decision variables and 19 constraints</code></pre>
+##   a linear program with 12 decision variables and 16 constraints</code></pre>
 <pre class="r"><code> b=solve(lprec)
  get.objective(lprec) #  </code></pre>
-<pre><code>## [1] 0</code></pre>
+<pre><code>## [1] 55.57887</code></pre>
 <pre class="r"><code> get.variables(lprec) # </code></pre>
-<pre><code>##  [1] 2 0 2 0 3 0 1 0 2 0 0 0</code></pre>
+<pre><code>##  [1] 3 1 0 0 0 1 0 1 3 1 0 0</code></pre>
+<pre class="r"><code>e &lt;- as.data.frame(rbind(c(3,1,0,0,4),c(0, 1, 0,1,2),c(3, 1, 0,0,4)))
+names(e) &lt;- c(&quot;Gambhir&quot;,&quot;Yusuf&quot;,&quot;Kallis&quot;,&quot;Uthappa&quot;,&quot;Overs&quot;)
+rownames(e) &lt;- c(&quot;Malinga&quot;,&quot;Harbhajan&quot;,&quot;Pollard&quot;) 
+e</code></pre>
+<pre><code>##           Gambhir Yusuf Kallis Uthappa Overs
+## Malinga         3     1      0       0     4
+## Harbhajan       0     1      0       1     2
+## Pollard         3     1      0       0     4</code></pre>
+<pre class="r"><code>#Total overs=10  </code></pre>
 </div>
 <div id="lp-formulation-for-ipl-mumbai-indians---kolkata-knight-riders---batting-lineup" class="section level2">
 <h2>8. LP formulation for IPL (Mumbai Indians - Kolkata Knight Riders - Batting lineup)</h2>
@@ -500,31 +521,37 @@ uthappaPollard &lt;- computeER(&quot;RV Uthappa&quot;,&quot;KA Pollard&quot;)</c
  add.constraint(lprec, c(1,1,1,1, 0,0,0,0, 0,0,0,0), &quot;&lt;=&quot;,4)
  add.constraint(lprec, c(0,0,0,0,1,1,1,1,0,0,0,0), &quot;&lt;=&quot;,4)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,1,1,1), &quot;&lt;=&quot;,4)
- add.constraint(lprec, c(1,1,1,1,1,1,1,1,1,1,1,1), &quot;=&quot;,10)
+ add.constraint(lprec, c(1,1,1,1,1,1,1,1,1,1,1,1), &quot;=&quot;,11)
  
- add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,1)
- add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,2)
+ add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
+ add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,1)
+ add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
  add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), &quot;&gt;=&quot;,1)
- add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), &quot;&gt;=&quot;,1)
- add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), &quot;&gt;=&quot;,1)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), &quot;&lt;=&quot;,4)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), &quot;&gt;=&quot;,0)
+ add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), &quot;&gt;=&quot;,0)
+ add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), &quot;&gt;=&quot;,1)
+ add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), &quot;&gt;=&quot;,0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), &quot;&gt;=&quot;,1)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), &quot;&gt;=&quot;,0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), &quot;&gt;=&quot;,1)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), &quot;&lt;=&quot;,4)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), &quot;&gt;=&quot;,0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), &quot;&lt;=&quot;,4)
  lprec</code></pre>
 <pre><code>## Model name: 
-##   a linear program with 12 decision variables and 19 constraints</code></pre>
+##   a linear program with 12 decision variables and 16 constraints</code></pre>
 <pre class="r"><code> b=solve(lprec)
  get.objective(lprec) #  </code></pre>
-<pre><code>## [1] 0</code></pre>
+<pre><code>## [1] 94.22649</code></pre>
 <pre class="r"><code> get.variables(lprec) # </code></pre>
-<pre><code>##  [1] 2 0 2 0 3 0 1 0 2 0 0 0</code></pre>
+<pre><code>##  [1] 0 3 0 0 0 1 0 3 0 1 3 0</code></pre>
+<pre class="r"><code>e &lt;- as.data.frame(rbind(c(0,3,0,0,3),c(0, 1, 0,3,4),c(0, 1, 3,0,4)))
+names(e) &lt;- c(&quot;Gambhir&quot;,&quot;Yusuf&quot;,&quot;Kallis&quot;,&quot;Uthappa&quot;,&quot;Overs&quot;)
+rownames(e) &lt;- c(&quot;Malinga&quot;,&quot;Harbhajan&quot;,&quot;Pollard&quot;) 
+e</code></pre>
+<pre><code>##           Gambhir Yusuf Kallis Uthappa Overs
+## Malinga         0     3      0       0     3
+## Harbhajan       0     1      0       3     4
+## Pollard         0     1      3       0     4</code></pre>
+<pre class="r"><code>#Total overs=11  </code></pre>
 </div>
 </div>
 

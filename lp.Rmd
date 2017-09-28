@@ -56,6 +56,7 @@ B1	B2	Obj Fun(=4*B1+3*B2)
 ```{r message=FALSE }
 library(lpSolveAPI)
 library(dplyr)
+library(knitr)
 lprec <- make.lp(0, 2)
 a <-lp.control(lprec, sense="min")
 set.objfn(lprec, c(4, 3))  # Economy Rate of 4 and 3 for er1 and er2
@@ -230,7 +231,15 @@ Yuvraj	0	3	0
 Dhoni	2	0	0  
 Overs	3	4	1  
 			Total=8  
-			
+
+This is also shown below
+```{r}
+e <- as.data.frame(rbind(c(1,1,1),c(0,3,0),c(2,0,0),c(3,4,1)))
+names(e) <- c("S Watson","B Lee","MA Starc")
+rownames(e) <- c("Kohli","Yuvraj","Dhoni","Overs")
+e
+```
+
 **Note:** This assumes that the batsmen perform at their current Strike Rate. Howvever anything can happen
 in a real game, but nevertheless this is a fairly reasonable estimate of the performance
 
@@ -312,12 +321,14 @@ get.variables(lprec) #
 The minimum runs that will be conceded by these 3 bowlers in 10 overs is 73.58 assuming the bowling
 is rotated as follows
 
-Batsman	RA Jadeja	R Ashwin	JJ Bumrah  
-S Watson	1	0	0  
-AJ Finch	2	1	1  
-DA Warner	1	1	3  
-Overs	4	2	4  
-			Total=10  
+
+```{r}
+e <- as.data.frame(rbind(c(1,0,0),c(2,1,1),c(1,1,3),c(4,2,4)))
+names(e) <- c("RA Jadeja","R Ashwin","JJ Bumrah")
+rownames(e) <- c("S Watson","AJ Finch","DA Warner","Overs")
+e 
+#Total overs=10  
+```
 
 ## 7. LP formulation for IPL (Mumbai Indians - Kolkata Knight Riders - Bowling lineup)
 As in the case of International T20s I also have processed IPL data derived from my R package yorkr. [yorkr](https://cran.r-project.org/web/packages/yorkr/index.html). yorkr processes yaml data from [Cricsheet](https://cricsheet.org/). The processed data for all IPL matches can be downloaded from [GooglyPlus](https://github.com/tvganesh/GooglyPlus)
@@ -368,27 +379,34 @@ Formulating and solving this for the bowling lineup of Mumbai Indians against Ko
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,1,1,1), "<=",4)
  add.constraint(lprec, c(1,1,1,1,1,1,1,1,1,1,1,1), "=",10)
  
- add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), ">=",1)
- add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), ">=",0)
- add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), ">=",2)
+ add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), ">=",0)
+ add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), ">=",1)
+ add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), ">=",0)
  add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), ">=",0)
- add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), ">=",1)
- add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), ">=",0)
- add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), ">=",1)
- add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), ">=",0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), ">=",1)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), "<=",4)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), ">=",1)
+ add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), ">=",1)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), ">=",1)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), ">=",0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), "<=",4)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), ">=",0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), "<=",4)
  
  lprec
  b=solve(lprec)
  get.objective(lprec) #  
  get.variables(lprec) # 
  
+```
+
+
+
+```{r}
+e <- as.data.frame(rbind(c(3,1,0,0,4),c(0, 1, 0,1,2),c(3, 1, 0,0,4)))
+names(e) <- c("Gambhir","Yusuf","Kallis","Uthappa","Overs")
+rownames(e) <- c("Malinga","Harbhajan","Pollard") 
+e
+#Total overs=10  
 ```
 
 
@@ -412,25 +430,37 @@ the batsman's Strike rate (this is same as the bowler's Economy rate)
  add.constraint(lprec, c(1,1,1,1, 0,0,0,0, 0,0,0,0), "<=",4)
  add.constraint(lprec, c(0,0,0,0,1,1,1,1,0,0,0,0), "<=",4)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,1,1,1), "<=",4)
- add.constraint(lprec, c(1,1,1,1,1,1,1,1,1,1,1,1), "=",10)
+ add.constraint(lprec, c(1,1,1,1,1,1,1,1,1,1,1,1), "=",11)
  
- add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), ">=",1)
- add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), ">=",0)
- add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), ">=",2)
+ add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), ">=",0)
+ add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), ">=",1)
+ add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), ">=",0)
  add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), ">=",0)
- add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), ">=",1)
- add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), ">=",0)
- add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), ">=",1)
- add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), ">=",0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), ">=",1)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), "<=",4)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), ">=",1)
+ add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), ">=",1)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), ">=",1)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), ">=",0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), "<=",4)
  add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), ">=",0)
- add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), "<=",4)
  lprec
  b=solve(lprec)
  get.objective(lprec) #  
  get.variables(lprec) # 
 ```
+
+
+```{r}
+e <- as.data.frame(rbind(c(0,3,0,0,3),c(0, 1, 0,3,4),c(0, 1, 3,0,4)))
+names(e) <- c("Gambhir","Yusuf","Kallis","Uthappa","Overs")
+rownames(e) <- c("Malinga","Harbhajan","Pollard") 
+e
+#Total overs=11  
+```
+
+**Conclusion:** It is possible to thus determine the optimum no of overs to give to a specific bowler
+based on his/her Economy Rate with a particular batsman. Similarly one can determine the
+maximim runs that can be scored by a batsmen based on their strike rate with bowlers. However,
+while this may provide some indication a cricket like any other game depends on a fair
+amount of chance.
