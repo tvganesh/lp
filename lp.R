@@ -32,7 +32,7 @@ lp.control(lprec, sense="min")
 set.objfn(lprec, c(4, 2,2,5))
 add.constraint(lprec, c(1, 1,0,0), "<=",8)
 add.constraint(lprec, c(0, 0,1,1), "<=",7)
-add.constraint(lprec, c(1, 1,1,1), "=",12)
+add.constraint(lprec, c(1, 1,1,1), "=",5)
 add.constraint(lprec, c(1, 0,0,0), ">",1)
 add.constraint(lprec, c(0, 1,0,0), ">",1)
 add.constraint(lprec, c(0, 0,1,0), ">",1)
@@ -566,3 +566,48 @@ solve(lprec)
 get.objective(lprec) #  
 get.variables(lprec) # 
  
+
+###################################
+lprec <- make.lp(0, 9)
+lp.control(lprec, sense="min")
+
+set.objfn(lprec, c(jadejaWatson$SR, jadejaFinch$SR,jadejaWarner$SR,
+                   ashwinWatson$SR,ashwinFinch$SR,ashwinWarner$SR,
+                   bumrahWatson$SR,bumrahFinch$SR,bumrahWarner$SR))
+
+add.constraint(lprec, c(1, 1,1,0,0,0, 0,0,0), "<=",4)
+add.constraint(lprec, c(0,0,0,1,1,1,0,0,0), "<=",3)
+add.constraint(lprec, c(0,0,0,0,0,0,1,1,1), "<=",4)
+add.constraint(lprec, c(1,1,1,1,1,1,1,1,1), "=",10)
+
+
+add.constraint(lprec, c(1,0,0,0,0,0,0,0,0), ">=",1)
+#add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,1,0,0,0,0,0,0,0), ">=",0)
+#add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,1,0,0,0,0,0,0), ">=",1)
+# add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,1,0,0,0,0,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,1,0,0,0,0), ">=",1)
+#add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,1,0,0,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,0,1,0,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,0,0,1,0), ">=",1)
+#add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,0,0,0,1), ">=",0)
+
+lprec
+solve(lprec)
+get.objective(lprec) #  
+get.variables(lprec) # 
