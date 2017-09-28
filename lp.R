@@ -212,3 +212,28 @@ uthappaPollard <- computeSR("RV Uthappa","KA Pollard")
  get.objective(lprec) #   
  get.variables(lprec) # 
  
+ 
+ library("lpSolveAPI")
+ lprec <- make.lp(0, 4)
+ lp.control(lprec, sense="min")
+ 
+ set.objfn(lprec, c(gambhirMalinga$SR, yusufMalinga$SR,
+                    gambhirHarbhajan$SR,yusufHarbhajan$SR
+                    ))
+ add.constraint(lprec, c(1, 1,0,0), "<=",4)
+ add.constraint(lprec, c(1,1,0,0), "<=",4)
+ add.constraint(lprec, c(1,1,1,1), "=",6)
+ 
+ add.constraint(lprec, c(1, 0,0,0), ">",0)
+ add.constraint(lprec, c(1, 0,0,0), "<=",4)
+ add.constraint(lprec, c(0, 1,0,0), ">",1)
+ add.constraint(lprec, c(0, 1,0,0), "<=",4)
+ add.constraint(lprec, c(0, 0,1,0), ">",1)
+ add.constraint(lprec, c(0, 0,1,0), "<=",4)
+ add.constraint(lprec, c(0, 0,0,1), ">",1)
+ add.constraint(lprec, c(0, 0,0,1), "<=",4)
+ lprec
+ solve(lprec)
+ get.objective(lprec) #   15
+ get.variables(lprec) # 1 2 2 1
+ 
