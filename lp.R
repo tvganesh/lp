@@ -406,5 +406,92 @@ uthappaPollard <- computeSR("RV Uthappa","KA Pollard")
  
  
  
+ ##############################T20
+ load("Australia-India-allMatches.RData")
  
+ # Kohli
+kohliWatson<- computeSR("V Kohli","SR Watson")
+kohliWatson
+
+kohliLee <- computeSR("V Kohli","B Lee")
+kohliLee
+
+kohliStarc <- computeSR("V Kohli","MA Starc")
+kohliStarc
+ 
+
+# Yuvraj
+yuvrajWatson<- computeSR("Yuvraj Singh","SR Watson")
+yuvrajWatson
+
+yuvrajLee <- computeSR("Yuvraj Singh","B Lee")
+yuvrajLee
+
+yuvrajStarc <- computeSR("Yuvraj Singh","MA Starc")
+yuvrajStarc
+ 
+# MS Dhoni
+dhoniWatson<- computeSR("MS Dhoni","SR Watson")
+dhoniWatson
+
+dhoniLee <- computeSR("MS Dhoni","B Lee")
+dhoniLee
+
+dhoniStarc <- computeSR("MS Dhoni","MA Starc")
+dhoniStarc
+
+
+
+library("lpSolveAPI")
+lprec <- make.lp(0, 9)
+lp.control(lprec, sense="max")
+
+set.objfn(lprec, c(kohliWatson$SR, kohliLee$SR,kohliStarc$SR,
+                   yuvrajWatson$SR,yuvrajLee$SR,yuvrajStarc$SR,
+                   dhoniWatson$SR,dhoniLee$SR,dhoniStarc$SR))
+
+add.constraint(lprec, c(1, 1,1,0,0,0, 0,0,0), "<=",3)
+add.constraint(lprec, c(0,0,0,1,1,1,0,0,0), "<=",3)
+add.constraint(lprec, c(0,0,0,0,0,0,1,1,1), "<=",3)
+add.constraint(lprec, c(1,1,1,1,1,1,1,1,1), "=",7)
+
+
+add.constraint(lprec, c(1,0,0,0,0,0,0,0,0), ">=",1)
+#add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,1,0,0,0,0,0,0,0), ">=",0)
+#add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,1,0,0,0,0,0,0), ">=",2)
+# add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,1,0,0,0,0,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,1,0,0,0,0), ">=",1)
+#add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,1,0,0,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,0,1,0,0), ">=",1)
+#add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,0,0,1,0), ">=",0)
+#add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), "<=",4)
+
+add.constraint(lprec, c(0,0,0,0,0,0,0,0,1), ">=",1)
+
+lprec
+solve(lprec)
+get.objective(lprec) #  
+get.variables(lprec) # 
+
+
+
+
+
+
+
+
  
