@@ -238,7 +238,7 @@ uthappaPollard <- computeSR("RV Uthappa","KA Pollard")
  get.objective(lprec) #   
  get.variables(lprec) # 
  
- ########################################################6########################
+ ########################################################6######################## # 3 batsman
  lprec
  solve(lprec)
  get.objective(lprec) #   
@@ -272,5 +272,139 @@ uthappaPollard <- computeSR("RV Uthappa","KA Pollard")
  solve(lprec)
  get.objective(lprec) #  
  get.variables(lprec) # 
+ 
+ 
+ 
+ ########################################################6######################## # 4 batsman
+ lprec
+ solve(lprec)
+ get.objective(lprec) #   
+ get.variables(lprec) # 
+ 
+ 
+ library("lpSolveAPI")
+ lprec <- make.lp(0, 12)
+ lp.control(lprec, sense="min")
+ 
+ set.objfn(lprec, c(gambhirMalinga$SR, yusufMalinga$SR,kallisMalinga$SR,uthappaMalinga$SR,
+                    gambhirHarbhajan$SR,yusufHarbhajan$SR,kallisHarbhajan$SR,uthappaHarbhajan$SR,
+                    gambhirPollard$SR,yusufPollard$SR,kallisPollard$SR,uthappaPollard$SR))
+ 
+ add.constraint(lprec, c(1, 1,1,1, 0,0,0,0, 0,0,0,0), "<=",4)
+ add.constraint(lprec, c(0,0,0,0,1,1,1,1,0,0,0,0), "<=",4)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,1,1,1), "<=",4)
+ add.constraint(lprec, c(1,1,1,1,1,1,1,1,1,1,1,1), "=",10)
+
+ 
+ add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), ">=",1)
+ #add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), ">=",0)
+ #add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), ">=",2)
+ # add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), ">=",0)
+ #add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), ">=",1)
+ #add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), ">=",0)
+ #add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), ">=",1)
+ #add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), ">=",0)
+ #add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), ">=",1)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), ">=",0)
+ #add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), "<=",4)
+ 
+ lprec
+ solve(lprec)
+ get.objective(lprec) #  
+ get.variables(lprec) # 
+ 
+ 
+ 
+ ######################################### Maximizing
+ lprec
+ solve(lprec)
+ get.objective(lprec) #   
+ get.variables(lprec) # 
+ 
+ 
+ library("lpSolveAPI")
+ lprec <- make.lp(0, 12)
+ lp.control(lprec, sense="max")
+ 
+ set.objfn(lprec, c(gambhirMalinga$SR, yusufMalinga$SR,kallisMalinga$SR,uthappaMalinga$SR,
+                    gambhirHarbhajan$SR,yusufHarbhajan$SR,kallisHarbhajan$SR,uthappaHarbhajan$SR,
+                    gambhirPollard$SR,yusufPollard$SR,kallisPollard$SR,uthappaPollard$SR))
+ 
+ add.constraint(lprec, c(1, 1,1,1, 0,0,0,0, 0,0,0,0), "<=",4)
+ add.constraint(lprec, c(0,0,0,0,1,1,1,1,0,0,0,0), "<=",4)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,1,1,1), "<=",4)
+ add.constraint(lprec, c(1,1,1,1,1,1,1,1,1,1,1,1), "=",10)
+ 
+ 
+ add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), ">=",1)
+ #add.constraint(lprec, c(1,0,0,0,0,0,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), ">=",0)
+ #add.constraint(lprec, c(0,1,0,0,0,0,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), ">=",2)
+ # add.constraint(lprec, c(0,0,1,0,0,0,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), ">=",0)
+ #add.constraint(lprec, c(0,0,0,1,0,0,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), ">=",1)
+ #add.constraint(lprec, c(0,0,0,0,1,0,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), ">=",0)
+ #add.constraint(lprec, c(0,0,0,0,0,1,0,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), ">=",1)
+ #add.constraint(lprec, c(0,0,0,0,0,0,1,0,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), ">=",0)
+ #add.constraint(lprec, c(0,0,0,0,0,0,0,1,0,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), ">=",1)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,1,0,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), ">=",0)
+ #add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,1,0,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,1,0), "<=",4)
+ 
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), ">=",0)
+ add.constraint(lprec, c(0,0,0,0,0,0,0,0,0,0,0,1), "<=",4)
+ 
+ lprec
+ solve(lprec)
+ get.objective(lprec) #  
+ get.variables(lprec) # 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
