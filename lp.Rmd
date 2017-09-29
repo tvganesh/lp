@@ -69,10 +69,13 @@ get.objective(lprec) # 13
 get.variables(lprec) # 1    3 
 ```
 
-Note: In the above example **13 runs** is the minimum that can be scored and this requires
+**Note 1:** In the above example **13 runs** is the minimum that can be scored and this requires
 
 - o1=1
 - o2=3
+
+**Note 2:**The numbers in the columns represent the number of overs that need to be bowled by a bowler to the
+corresponding batsman.
 
 ## 4. LP formulation (Example 2)
 In this formulation there are 2 bowlers and 2 batsmen
@@ -242,6 +245,10 @@ e
 
 **Note:** This assumes that the batsmen perform at their current Strike Rate. Howvever anything can happen
 in a real game, but nevertheless this is a fairly reasonable estimate of the performance
+
+
+**Note 2:**The numbers in the columns represent the number of overs that need to be bowled by a bowler to the
+corresponding batsman.
 
 ## 6. LP formulation for International T20 India vs Australia (Bowling lineup)
 For this I compute how the bowling should be rotated between R Ashwin, RA Jadeja and JJ Bumrah when
